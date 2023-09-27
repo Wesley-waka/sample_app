@@ -11,25 +11,13 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= render "layouts/shim" %>
   </head>
   <body>
-    <header class="navbar navbar-fixed-top navbar-inverse" >
-      <div class="container">
-        <%= link_to"sample app", '#', id: 'logo' %>
-        <nav>
-          <ul class="nav navbar-nav pull-right">
-            <li>
-              <%= link_to "Home","#" %>
-            </li>
-            <li>
-            <%= link_to "about","#"%></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <%= render 'layouts/header'%>
     <div class="container">
-      
-    </div>
     <%= yield %>
+    <%= render "layouts/footer" %>
+    </div>
   </body>
 </html>
