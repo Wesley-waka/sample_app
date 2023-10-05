@@ -11,6 +11,7 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
+  config.cache_store = :redis_cache_store, { url: 'redis://redis-14143.c52.us-east-1-4.ec2.cloud.redislabs.com:14143/0' }
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false

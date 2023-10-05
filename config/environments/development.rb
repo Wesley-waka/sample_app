@@ -10,6 +10,7 @@ Rails.application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
+  config.cache_store = :redis_cache_store, { url: 'redis://redis-14143.c52.us-east-1-4.ec2.cloud.redislabs.com:14143/0' }
 
   # Show full error reports.
   config.consider_all_requests_local = true
@@ -22,8 +23,7 @@ Rails.application.configure do
   if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
-
-    config.cache_store = :memory_store
+    config.cache_store = :redis_cache_store, { url: 'redis://redis-14143.c52.us-east-1-4.ec2.cloud.redislabs.com:14143/0' }
     config.public_file_server.headers = {
       "Cache-Control" => "public, max-age=#{2.days.to_i}"
     }
