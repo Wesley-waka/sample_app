@@ -10,7 +10,7 @@ Rails.application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
-  config.cache_store = :redis_cache_store, { url: 'redis://redis-14143.c52.us-east-1-4.ec2.cloud.redislabs.com:14143/0' }
+  config.cache_store = :redis_cache_store, { url: "redis://default:jFRlZB5XFJOjv9hkpqjMjNHoqecV3fO5@redis-14143.c52.us-east-1-4.ec2.cloud.redislabs.com:"  }
 
   # Show full error reports.
   config.consider_all_requests_local = true
@@ -23,14 +23,15 @@ Rails.application.configure do
   if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
-    config.cache_store = :redis_cache_store, { url: 'redis://redis-14143.c52.us-east-1-4.ec2.cloud.redislabs.com:14143/0' }
+    config.cache_store = :redis_cache_store, { url: "redis://default:jFRlZB5XFJOjv9hkpqjMjNHoqecV3fO5@redis-14143.c52.us-east-1-4.ec2.cloud.redislabs.com:14143"  }
+    
     config.public_file_server.headers = {
       "Cache-Control" => "public, max-age=#{2.days.to_i}"
     }
   else
-    config.action_controller.perform_caching = false
+    config.action_controller.perform_caching = true
+    config.cache_store = :redis_cache_store, { url: "redis://default:jFRlZB5XFJOjv9hkpqjMjNHoqecV3fO5@redis-14143.c52.us-east-1-4.ec2.cloud.redislabs.com:14143"  }
 
-    config.cache_store = :null_store
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
