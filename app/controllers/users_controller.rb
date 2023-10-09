@@ -24,6 +24,7 @@ class UsersController < ApplicationController
     
     if @user.save 
       # Cache the user data
+      log_in @user
       Rails.cache.write("user_#{params[:id]}", @user.to_json,expires_in: 1.minute)
       
       flash[:success] = 'Welcome to the sample App!'
