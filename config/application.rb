@@ -10,6 +10,7 @@ module SampleApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+    config.cache_store = :redis_cache_store, { url: "redis://default:jFRlZB5XFJOjv9hkpqjMjNHoqecV3fO5@redis-14143.c52.us-east-1-4.ec2.cloud.redislabs.com:14143"  }
 
     # Configuration for the application, engines, and railties goes here.
     #
