@@ -16,14 +16,14 @@ class User < ApplicationRecord
         Bcrypt::Password.create(string, cost: cost)
     end
 
-    # returns a random token
+    #Returns a random token
     def User.new_token
         SecureRandom.urlsafe_base64
     end
 
     # remember a user in the DBase for use in persistent sessions
     def remember
-        self.remember_token = User.token
+        self.remember_token = User.new_token
         update_attribute(:remember_digest,User.digest(remember_token))
     end
 
@@ -33,6 +33,7 @@ class User < ApplicationRecord
 
     # returns true if the given token matched the digest
     def authenticated?(remember_token)
+        return false if (remember_digest.nil)
         BCrypt::Password.new(:remmber_digest).is_password(remember_token)
     end
 end
