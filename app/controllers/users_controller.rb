@@ -45,7 +45,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params)
+    if @user.password_reset_expired?
+      flash[:danger] = "Password reset has expired."
+      redirect_to new_password_reset_url
+    elsif(params[:user][:password] && 
+        params[:user][:password_confirmation].blank?)
+        flash.now[:danger] = "Password/confirmation cannot be blank"
+        render "edit"
+    elsif @user.update_attributes(user_params)
+      log_in @user
       # handle a successful update
       flash[:success] = "Profile update"
       redirect_to @user
