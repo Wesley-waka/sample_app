@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-    attr_accessor :remember_token
-    before_save {self.email = email.downcase}
+    attr_accessor :remember_token, :activation_token
+    before_save :downcase_email
+    before_create :create_activation_digest
     validates :name,  presence: true, length: {maximum: 50}
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\-.]+\.[a-z]+\z/i
     validates :email, presence: true, length: {maximum: 255},
@@ -10,10 +11,10 @@ class User < ApplicationRecord
     validates :password, length: {minimum: 6}, allow_nil: true
 
     # returns hash digest of the given string
-    def User.digest 
-            cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : 
+    def User.digest(string)
+        cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : 
                                                         BCrypt::Engine.cost
-        Bcrypt::Password.create(string, cost: cost)
+        BCrypt::Password.create(string, cost: cost)
     end
 
     #Returns a random token
@@ -35,5 +36,18 @@ class User < ApplicationRecord
     def authenticated?(remember_token)
         return false if (remember_digest.nil)
         BCrypt::Password.new(:remmber_digest).is_password(remember_token)
+    end
+
+    private
+
+    # converts email to all lowercase
+    def downcase_email
+        self.email = email.downcase
+    end
+
+    # creates and assigns the activation token and digest
+    def create_activation_digest
+        self.activation_token = User.new_token
+        self.activation_digest = User.digest(activation_token)
     end
 end
