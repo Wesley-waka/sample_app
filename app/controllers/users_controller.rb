@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update,:destroy]
   before_action :correct_user, only: [:edit, :update]
-  befoe_action :admin_user, only: [:destroy]
+  before_action :admin_user, only: [:destroy]
   # def show
   #   @user = User.find(params[:id])
   # end
@@ -32,11 +32,10 @@ class UsersController < ApplicationController
     
     if @user.save 
       # Cache the user data
-      log_in @user
-      Rails.cache.write("user_#{params[:id]}", @user.to_json,expires_in: 1.minute)
-      
-      flash[:success] = 'Welcome to the sample App!'
-      redirect_to user_url(@user)
+      UserMailer.account_activation(@user).deliver_now
+      # Rails.cache.write("user_#{params[:id]}", @user.to_json,expires_in: 1.minute)      
+      flash[:info] = 'Please check Your email to activate your account!'
+      redirect_to root_url
     else
       render 'new'
     end
