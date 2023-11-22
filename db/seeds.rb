@@ -5,6 +5,7 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+# User
 User.create!(name: "Example User",
             email: "example@tutorial.org",
             password:"foobar",
@@ -23,9 +24,17 @@ User.create!(name: "Example User",
                 activated: true,
                 activated_at: Time.zone.now)
 end
-
+# Microposts
 users = User.order(:created_at).first(6)
 50.times do
     content = Faker::Lorem.sentence(word_count: 5)
     users.each{ |user| user.microposts.create!(content: content)}
 end
+
+# Following relationships
+users = User.all
+user = users.first
+following = users[2..50]
+followers = users[3..40]
+following.each{|followed| user.follow(followed)}
+followers.each{|follower| follower.follow(user)}
