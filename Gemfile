@@ -17,7 +17,7 @@ gem "bcrypt"
 gem 'redis'
 gem 'will_paginate'
 gem 'faker'
-
+gem "image_processing"
 gem 'active_storage_validations', '0.8.2'
 group :development, :test do
   gem "sqlite3", "1.4.2"
