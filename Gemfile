@@ -14,6 +14,7 @@ gem "puma",            "5.6.4"
 gem "bootsnap",        "1.12.0", require: false
 gem 'bootstrap-sass'
 gem "bcrypt"
+gem "aws-sdk-s3", require: false
 gem 'redis'
 gem 'will_paginate'
 gem 'faker'
