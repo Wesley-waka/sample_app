@@ -15,7 +15,7 @@ gem "bootsnap",        "1.12.0", require: false
 gem 'bootstrap-sass'
 gem "bcrypt"
 gem 'redis'
-
+gem 'will_paginate'
 gem 'faker'
 
 group :development, :test do

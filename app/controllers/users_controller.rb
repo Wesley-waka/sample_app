@@ -11,15 +11,19 @@ class UsersController < ApplicationController
   end
 
   def show
-    user_cache_key = "user_#{params[:id]}"
-    cached_user = Rails.cache.read(user_cache_key)
+    @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
+
+    # user_cache_key = "user_#{params[:id]}"
+    # cached_user = Rails.cache.read(user_cache_key)
   
-    if cached_user
-      @user = cached_user
-    else
-      @user = User.find(params[:id])
-      Rails.cache.write(user_cache_key, @user, expires_in: 1.hour)
-    end
+    # if cached_user
+    #   @user = cached_user
+    # else
+    #   @user = User.find(params[:id])
+    #   @microposts = @user.microposts.paginate(page: params[:page])
+    #   Rails.cache.write(user_cache_key, @user, expires_in: 1.hour)
+    # end
   end
   
   
