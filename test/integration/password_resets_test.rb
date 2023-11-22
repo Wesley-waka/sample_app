@@ -7,7 +7,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
   end
 end
 
-class ForgotPasswordFormTest < PasswordResets 
+class ForgotPasswordFormTest < PasswordResetsTest 
   test "password reset path" do
     get new_password_reset_path
     assert_template "password_resets/new"
@@ -22,7 +22,7 @@ class ForgotPasswordFormTest < PasswordResets
   end
 end
 
-class PasswordResetForm < PasswordResets
+class PasswordResetForm < PasswordResetsTest
   def setup
     super 
     @user = users(:michael)
